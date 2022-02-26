@@ -21,7 +21,7 @@ namespace StackOnlyList
 		public StackOnlyList(int initialCapacity)
 		{
 			if(initialCapacity <= 0)
-				throw new InvalidOperationException("Non-positive capacity is not allowed.");
+				throw new InvalidOperationException($"Non-positive capacity '{initialCapacity}' is not allowed.");
 
 			ArrayFromPool = ArrayPool<T>.Shared.Rent(initialCapacity);
 			Span = ArrayFromPool;
@@ -33,9 +33,10 @@ namespace StackOnlyList
 		{
 			get
 			{
+#if Debug
 				if(index >= Count)
-					throw new IndexOutOfRangeException();
-
+					throw new IndexOutOfRangeException($"Index '{index}' is out of range. Count: '{Count}'.");
+#endif
 				return Span[index];
 			}
 		}
