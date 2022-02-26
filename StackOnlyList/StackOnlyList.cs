@@ -20,6 +20,9 @@ namespace StackOnlyList
 
 		public StackOnlyList(int initialCapacity)
 		{
+			if(initialCapacity <= 0)
+				throw new InvalidOperationException("Non-positive capacity is not allowed.");
+
 			ArrayFromPool = ArrayPool<T>.Shared.Rent(initialCapacity);
 			Span = ArrayFromPool;
 			Capacity = initialCapacity;
