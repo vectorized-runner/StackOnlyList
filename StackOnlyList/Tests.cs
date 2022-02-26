@@ -33,6 +33,30 @@ namespace StackOnlyList
 			Assert.AreEqual(5, list.Count);
 			Assert.AreEqual(8, list.Capacity);
 		}
+
+		[Test]
+		public void ThrowsOnRemoveAtInvalidIndex()
+		{
+			Assert.Throws<IndexOutOfRangeException>(() =>
+			{
+				using var list = new StackOnlyList<int>(1);
+				list.RemoveAtSwapBack(0);
+			});
+		}
+
+		[Test]
+		public void RemoveAtWorks()
+		{
+			using var list = new StackOnlyList<int>(1);
+			list.Add(1);
+			list.Add(2);
+			list.Add(3);
+			list.RemoveAtSwapBack(0);
+			
+			Assert.AreEqual(3, list[0]);
+			Assert.AreEqual(2, list.Count);
+		}
+
 		[TestCase(-1)]
 		[TestCase(-10)]
 		[TestCase(-24382934)]

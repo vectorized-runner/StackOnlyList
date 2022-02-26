@@ -74,6 +74,12 @@ namespace StackOnlyList
 			Span[Count++] = item;
 		}
 
+		public void RemoveAtSwapBack(int index)
+		{
+			CheckIndexOutOfRangeAndThrow(index);
+			Span[index] = Span[--Count];
+		}
+
 		public void Dispose()
 		{
 			var toReturn = ArrayFromPool;
