@@ -9,6 +9,15 @@ namespace StackOnlyList
 		T[] ArrayFromPool;
 		int Capacity;
 		int Count;
+		public Span<T> AsSpan()
+		{
+			return Span[..Count];
+		}
+
+		public ReadOnlySpan<T> AsReadOnlySpan()
+		{
+			return AsSpan();
+		}
 
 		public StackOnlyList(Span<T> initialBuffer)
 		{
