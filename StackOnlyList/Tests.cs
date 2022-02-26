@@ -6,6 +6,63 @@ namespace StackOnlyList
 	public class Tests
 	{
 		[Test]
+		public void WorksWithStackAlloc()
+		{
+			using var list = new StackOnlyList<int>(stackalloc int[2]);
+			list.Add(5);
+			list.Add(10);
+			
+			Assert.AreEqual(5, list[0]);
+			Assert.AreEqual(10, list[1]);
+		}
+
+		[Test]
+		public void StackAllocCanGrow()
+		{
+			using var list = new StackOnlyList<int>(stackalloc int[2]);
+			list.Add(5);
+			list.Add(10);
+			list.Add(15);
+
+			Assert.AreEqual(5, list[0]);
+			Assert.AreEqual(10, list[1]);
+			Assert.AreEqual(15, list[2]);
+		}
+
+		[Test]
+		public void CanAddAfterDispose()
+		{
+			var list = new StackOnlyList<int>(stackalloc int[10]);
+
+			list.Add(2);
+			list.Add(4);
+			list.Add(6);
+			
+			list.Dispose();
+
+			list.Add(10);
+			
+			Assert.AreEqual(10, list[0]);
+			Assert.AreEqual(1, list.Count);
+		}
+
+		[Test]
+		public void CountDoesNotIncreaseWithoutPassingRef()
+		{
+			var theList = new StackOnlyList<int>(stackalloc int[10]);
+			AddNum(theList, 2);
+			AddNum(theList, 5);
+			AddNum(theList, 7);
+			
+			Assert.AreEqual(0, theList.Count);
+			
+			void AddNum(StackOnlyList<int> list, int num)
+			{
+				list.Add(num);
+			}
+		}
+		
+		[Test]
 		public void AddOneElement()
 		{
 			using var list = new StackOnlyList<int>(1);
