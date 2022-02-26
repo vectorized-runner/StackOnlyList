@@ -43,10 +43,7 @@ namespace StackOnlyList
 		{
 			get
 			{
-#if Debug
-				if(index >= Count)
-					throw new IndexOutOfRangeException($"Index '{index}' is out of range. Count: '{Count}'.");
-#endif
+				CheckIndexOutOfRangeAndThrow(index);
 				return Span[index];
 			}
 		}
@@ -88,6 +85,12 @@ namespace StackOnlyList
 			{
 				ArrayPool<T>.Shared.Return(toReturn);
 			}
+		}
+
+		void CheckIndexOutOfRangeAndThrow(int index)
+		{
+			if(index >= Count)
+				throw new IndexOutOfRangeException($"Index '{index}' is out of range. Count: '{Count}'.");
 		}
 	}
 }
