@@ -7,8 +7,9 @@ namespace StackOnlyList
 	{
 		Span<T> Span;
 		T[] ArrayFromPool;
-		int Capacity;
-		int Count;
+		public int Capacity { get; private set; }
+		public int Count { get; private set; }
+
 		public Span<T> AsSpan()
 		{
 			return Span[..Count];
