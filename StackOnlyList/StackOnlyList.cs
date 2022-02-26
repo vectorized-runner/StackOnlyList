@@ -48,6 +48,12 @@ namespace StackOnlyList
 			}
 		}
 
+		public ref T ElementAsRef(int index)
+		{
+			CheckIndexOutOfRangeAndThrow(index);
+			return ref Span[index];
+		}
+
 		public void Add(in T item)
 		{
 			// Check for resizing
