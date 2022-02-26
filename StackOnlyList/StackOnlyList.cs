@@ -50,9 +50,17 @@ namespace StackOnlyList
 
 		public void Add(in T item)
 		{
+			// Check for resizing
 			if(Capacity == Count)
 			{
-				// Resize
+				if(Capacity == 0)
+				{
+					// Use a fresh array, don't do any copying
+					Capacity = 4;
+					ArrayFromPool = ArrayPool<T>.Shared.Rent(Capacity);
+					Span = ArrayFromPool;
+				}
+				else
 				{
 					// First copy to new array, then return to the pool
 					var previousSpan = Span;
@@ -83,10 +91,10 @@ namespace StackOnlyList
 		public void Dispose()
 		{
 			var toReturn = ArrayFromPool;
-
-			// Avoid using this struct again if it was erroneously appended again
+			
+			// Clear data, so using after disposed is safer
 			this = default;
-
+			
 			if(toReturn != null)
 			{
 				ArrayPool<T>.Shared.Return(toReturn);
