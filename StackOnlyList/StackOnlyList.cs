@@ -60,6 +60,7 @@ namespace StackOnlyList
 					}
 
 					ArrayFromPool = newArray;
+					Capacity = newCapacity;
 				}
 			}
 
