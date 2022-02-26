@@ -14,6 +14,25 @@ namespace StackOnlyList
 			Assert.AreEqual(2, list[0]);
 		}
 
+		[Test]
+		public void AddElementsTriggerResize()
+		{
+			using var list = new StackOnlyList<int>(1);
+			list.Add(2);
+			list.Add(4);
+			list.Add(6);
+			list.Add(8);
+			list.Add(10);
+
+			Assert.AreEqual(2, list[0]);
+			Assert.AreEqual(4, list[1]);
+			Assert.AreEqual(6, list[2]);
+			Assert.AreEqual(8, list[3]);
+			Assert.AreEqual(10, list[4]);
+
+			Assert.AreEqual(5, list.Count);
+			Assert.AreEqual(8, list.Capacity);
+		}
 		[TestCase(-1)]
 		[TestCase(-10)]
 		[TestCase(-24382934)]
