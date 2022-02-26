@@ -63,6 +63,28 @@ namespace StackOnlyList
 		}
 		
 		[Test]
+		public void WorksWhenPassingByRef()
+		{
+			var theList = new StackOnlyList<int>(stackalloc int[10]);
+			AddNum(ref theList, 2);
+			AddNum(ref theList, 5);
+			AddNum(ref theList, 7);
+
+			Assert.AreEqual(2, theList[0]);
+			Assert.AreEqual(5, theList[0]);
+			Assert.AreEqual(7, theList[0]);
+
+			Assert.AreEqual(0, theList.Count);
+			
+			void AddNum(ref StackOnlyList<int> list, int num)
+			{
+				list.Add(num);
+			}
+
+			theList.Dispose();
+		}
+		
+		[Test]
 		public void AddOneElement()
 		{
 			using var list = new StackOnlyList<int>(1);
