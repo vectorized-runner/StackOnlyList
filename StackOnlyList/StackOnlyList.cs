@@ -216,6 +216,16 @@ namespace StackOnlyList
 			}
 		}
 
+		public void RemoveAt(int index)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void RemoveAt(int index, out T element)
+		{
+			throw new NotImplementedException();
+		}
+
 		public void RemoveAtSwapBack(int index)
 		{
 			CheckIndexOutOfRangeAndThrow(index);

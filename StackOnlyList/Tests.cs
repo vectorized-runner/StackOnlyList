@@ -69,6 +69,79 @@ namespace StackOnlyList
 		}
 
 		[Test]
+		public void RemoveAtThrowsOnInvalidIndex()
+		{
+			Assert.Throws<InvalidOperationException>(() =>
+			{
+				using var list = new StackOnlyList<int>(10);
+				list.RemoveAt(0);
+			});
+		}
+
+		[Test]
+		public void RemoveAtFirst()
+		{
+			using var list = new StackOnlyList<int>(10);
+			
+			list.Add(2);
+			list.Add(4);
+			list.Add(6);
+			list.Add(8);
+			list.Add(10);
+			
+			list.RemoveAt(0);
+			
+			Assert.AreEqual(4, list[0]);
+			Assert.AreEqual(6, list[1]);			
+			Assert.AreEqual(8, list[2]);			
+			Assert.AreEqual(10, list[3]);			
+			
+			Assert.AreEqual(4, list.Count);
+		}
+
+		[Test]
+		public void RemoveAtLast()
+		{
+			using var list = new StackOnlyList<int>(10);
+			
+			list.Add(2);
+			list.Add(4);
+			list.Add(6);
+			list.Add(8);
+			list.Add(10);
+			
+			list.RemoveAt(4);
+			
+			Assert.AreEqual(2, list[0]);
+			Assert.AreEqual(4, list[1]);			
+			Assert.AreEqual(6, list[2]);			
+			Assert.AreEqual(8, list[3]);			
+			
+			Assert.AreEqual(4, list.Count);
+		}
+
+		[Test]
+		public void RemoveAtRandom()
+		{
+			using var list = new StackOnlyList<int>(10);
+			
+			list.Add(2);
+			list.Add(4);
+			list.Add(6);
+			list.Add(8);
+			list.Add(10);
+			
+			list.RemoveAt(1);
+			list.RemoveAt(2);
+			
+			Assert.AreEqual(2, list[0]);
+			Assert.AreEqual(6, list[1]);			
+			Assert.AreEqual(10, list[2]);			
+			
+			Assert.AreEqual(3, list.Count);
+		}
+
+		[Test]
 		public void EnsureCapacity()
 		{
 			using var list = new StackOnlyList<int>(0);
@@ -430,7 +503,7 @@ namespace StackOnlyList
 		}
 
 		[Test]
-		public void RemoveAtWorks()
+		public void RemoveAtSwapBackWorks()
 		{
 			using var list = new StackOnlyList<int>(1);
 			list.Add(1);
