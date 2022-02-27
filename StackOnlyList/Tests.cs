@@ -20,6 +20,66 @@ namespace StackOnlyList
 		// 		}
 		// 	});
 		// }
+
+		[Test]
+		public void CountNotDecreasedAfterRemoveNonExisting()
+		{
+			using var list = new StackOnlyList<int>(10);
+			list.Add(5);
+			list.Add(10);
+			list.Remove(2);
+
+			Assert.AreEqual(2, list.Count);	
+		}
+
+		[Test]
+		public void CountDecreasedAfterRemove()
+		{
+			using var list = new StackOnlyList<int>(10);
+			list.Add(5);
+			list.Add(10);
+			list.Remove(5);
+
+			Assert.AreEqual(1, list.Count);
+		}
+
+		[Test]
+		public void DoesNotContainAfterRemove()
+		{
+			using var list = new StackOnlyList<int>(10);
+			list.Add(5);
+			list.Remove(5);
+
+			Assert.IsFalse(list.Contains(5));
+		}
+
+		[Test]
+		public void DoesNotContainBeforeAdd()
+		{
+			using var list = new StackOnlyList<int>(10);
+			Assert.IsFalse(list.Contains(10));
+		}
+		
+		[Test]
+		public void ContainsAfterAdd()
+		{
+			using var list = new StackOnlyList<int>(10);
+			list.Add(5);
+			Assert.IsTrue(list.Contains(5));
+		}
+
+		[Test]
+		public void CountIsZeroAfterClear()
+		{
+			using var list = new StackOnlyList<int>(10);
+			list.Add(0);
+			list.Add(5);
+			list.Add(10);
+
+			list.Clear();
+			
+			Assert.AreEqual(0, list.Count);
+		}
 		
 		[Test]
 		public void StackAllocDoesntThrowWhenCalledOnSeparateMethod()
