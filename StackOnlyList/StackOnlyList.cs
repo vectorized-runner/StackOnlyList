@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Buffers;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace StackOnlyList
 {
@@ -41,6 +43,7 @@ namespace StackOnlyList
 
 		public T this[int index]
 		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
 			get
 			{
 				CheckIndexOutOfRangeAndThrow(index);
