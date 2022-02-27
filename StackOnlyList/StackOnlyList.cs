@@ -13,11 +13,13 @@ namespace StackOnlyList
 		public int Capacity { get; private set; }
 		public int Count { get; private set; }
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public Span<T> AsSpan()
 		{
 			return Span[..Count];
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public ReadOnlySpan<T> AsReadOnlySpan()
 		{
 			return AsSpan();
@@ -66,6 +68,7 @@ namespace StackOnlyList
 			}
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public ref T ElementAsRef(int index)
 		{
 			CheckIndexOutOfRangeAndThrow(index);
