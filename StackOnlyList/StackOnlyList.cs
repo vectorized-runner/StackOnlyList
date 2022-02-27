@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace StackOnlyList
 {
+	// Always pass this as ref to methods, never return it (unless you're ref returning, then its fine)
 	public ref struct StackOnlyList<T>
 	{
 		Span<T> Span;
@@ -57,6 +58,43 @@ namespace StackOnlyList
 			return ref Span[index];
 		}
 
+		public void Clear()
+		{
+			Count = 0;
+		}
+
+		public bool Remove(in T item)
+		{
+			for(int i = 0; i < Count; i++)
+			{
+				if(Span[i].Equals(item))
+				{
+					for(int j = i; j < Count - 1; j++)
+					{
+						Span[j] = Span[j + 1];
+					}
+
+					Count--;
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		public bool Contains(in T item)
+		{
+			for(int i = 0; i < Count; i++)
+			{
+				if(Span[i].Equals(item))
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+		
 		public void Add(in T item)
 		{
 			// Check for resizing
