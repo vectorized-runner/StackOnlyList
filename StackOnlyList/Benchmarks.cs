@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 
 namespace StackOnlyList
 {
 	[ShortRunJob]
 	[MemoryDiagnoser]
+	[SkipLocalsInit]
 	public class Benchmarks
 	{
 		// Array pool, Just new'ing, vs StackOnlyList
