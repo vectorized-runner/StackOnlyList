@@ -12,21 +12,11 @@ namespace StackOnlyList
 	[SkipLocalsInit]
 	public class Benchmarks
 	{
-		// Array pool, Just new'ing, vs StackOnlyList
-		// Simulate Lots of allocations (millions)
-		// Will we trigger stackoverflow?
-		// Just do integer sum
-		// Also want to check memory footprint
-		// Bonus: Disable Stack zero'ing
-		// Bonus: Some items exceed stack size
-
 		int[] CopyArray;
 		int Min = 0;
 		int Max = 1000;
 		int ArrayCount = 16;
-		int IterationCount = 10_000_000;
-
-		Stack<List<int>> Pool = new Stack<List<int>>();
+		int IterationCount = 1_000_000;
 
 		public Benchmarks()
 		{
@@ -44,7 +34,7 @@ namespace StackOnlyList
 		{
 			var sum = 0;
 
-			for(int iIter = 0; iIter < IterationCount; iIter++)
+			for(int i = 0; i < IterationCount; i++)
 			{
 				sum += SumListOnce();
 			}
