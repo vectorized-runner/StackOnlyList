@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnosers;
 
 namespace StackOnlyList
 {
 	[ShortRunJob]
 	[MemoryDiagnoser]
+	[HardwareCounters(HardwareCounter.CacheMisses, HardwareCounter.BranchMispredictions, HardwareCounter.InstructionRetired)]
 	[SkipLocalsInit]
 	public class Benchmarks
 	{
