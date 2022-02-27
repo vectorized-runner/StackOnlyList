@@ -168,7 +168,6 @@ namespace StackOnlyList
 
 		public void Add(in T item)
 		{
-			// Check for resizing
 			if(Capacity == Count)
 			{
 				var newCapacity = Capacity == 0 ? 4 : 2 * Capacity;
@@ -187,8 +186,9 @@ namespace StackOnlyList
 			{
 				// Use a fresh array, don't do any copying
 				Capacity = newCapacity;
-				ArrayFromPool = ArrayPool<T>.Shared.Rent(Capacity);
-				Span = ArrayFromPool;
+				var newArray = ArrayPool<T>.Shared.Rent(newCapacity);
+				ArrayFromPool = newArray;
+				Span = newArray;
 			}
 			else
 			{
@@ -203,6 +203,7 @@ namespace StackOnlyList
 					ArrayPool<T>.Shared.Return(ArrayFromPool);
 				}
 
+				ArrayFromPool = newArray;
 				Capacity = newCapacity;
 			}
 		}
