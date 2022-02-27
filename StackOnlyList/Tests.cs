@@ -20,6 +20,20 @@ namespace StackOnlyList
 		// 		}
 		// 	});
 		// }
+		
+		[Test]
+		public void WorksWithNullBuffer()
+		{
+			using var list = new StackOnlyList<int>(null);
+			list.Add(1);
+			list.Add(2);
+			list.Add(3);
+			
+			Assert.AreEqual(1, list[0]);
+			Assert.AreEqual(2, list[1]);
+			Assert.AreEqual(3, list[2]);
+		}
+		
 		[Test]
 		public void WorksWithZeroBuffer()
 		{
