@@ -262,7 +262,7 @@ namespace StackOnlyList
 		[Conditional("Debug")]
 		void CheckIndexOutOfRangeAndThrow(int index)
 		{
-			if(index >= Count)
+			if(index >= Count || index < 0)
 				throw new IndexOutOfRangeException($"Index '{index}' is out of range. Count: '{Count}'.");
 		}
 	}
