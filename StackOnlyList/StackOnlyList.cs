@@ -63,6 +63,19 @@ namespace StackOnlyList
 			Count = 0;
 		}
 
+		public int IndexOf(in T item)
+		{
+			for(int i = 0; i < Count; i++)
+			{
+				if(Span[i].Equals(item))
+				{
+					return i;
+				}
+			}
+
+			return -1;
+		}
+
 		public bool Remove(in T item)
 		{
 			for(int i = 0; i < Count; i++)

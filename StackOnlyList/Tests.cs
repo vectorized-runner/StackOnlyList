@@ -22,6 +22,24 @@ namespace StackOnlyList
 		// }
 
 		[Test]
+		public void IndexOf()
+		{
+			using var list = new StackOnlyList<int>();
+			Assert.AreEqual(-1, list.IndexOf(0));
+		}
+		
+		[Test]
+		public void IndexOf_1()
+		{
+			using var list = new StackOnlyList<int>();
+			list.Add(5);
+			list.Add(7);
+			
+			Assert.AreEqual(1, list.IndexOf(7));
+			Assert.AreEqual(0, list.IndexOf(5));
+		}
+
+		[Test]
 		public void RemoveFromMiddle()
 		{
 			using var list = new StackOnlyList<int>(10);
