@@ -168,13 +168,17 @@ namespace StackOnlyList
 
 		public void Add(in T item)
 		{
+			EnsureCapacityBeforeAddSingleItem();
+			Span[Count++] = item;
+		}
+
+		void EnsureCapacityBeforeAddSingleItem()
+		{
 			if(Capacity == Count)
 			{
 				var newCapacity = Capacity == 0 ? 4 : 2 * Capacity;
 				EnsureCapacity(newCapacity);
 			}
-
-			Span[Count++] = item;
 		}
 
 		public void EnsureCapacity(int newCapacity)
@@ -241,6 +245,30 @@ namespace StackOnlyList
 			Span[index] = Span[--Count];
 		}
 
+		public void RemoveFirst()
+		{
+			RemoveAt(0);
+		}
+
+		public void RemoveLast()
+		{
+			RemoveAt(Count - 1);
+		}
+
+		public void Insert(in T item, int index)
+		{
+			CheckIndexGreaterThanCountAndThrow(index);
+			EnsureCapacityBeforeAddSingleItem();
+
+			for(int i = Count; i > index; i--)
+			{
+				Span[i] = Span[i - 1];
+			}
+
+			Span[index] = item;
+			Count++;
+		}
+
 		public void Dispose()
 		{
 			var toReturn = ArrayFromPool;
@@ -260,7 +288,12 @@ namespace StackOnlyList
 		}
 
 		[Conditional("Debug")]
-		void CheckIndexOutOfRangeAndThrow(int index)
+		void CheckIndexGreaterThanCountAndThrow(int index)
+		{
+			if(index > Count || index < 0)
+				throw new IndexOutOfRangeException($"Index '{index}' is out of range. Count: '{Count}'.");
+		}
+
 		[Conditional("Debug")]
 		void CheckIndexGreaterOrEqualToCountAndThrow(int index)
 		{

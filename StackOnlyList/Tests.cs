@@ -20,7 +20,50 @@ namespace StackOnlyList
 		// 		}
 		// 	});
 		// }
+
+		[Test]
+		public void TestInsert()
+		{
+			using var list = new StackOnlyList<int>();
+			list.Add(1);
+			list.Add(2);
+			list.Add(3);
+
+			list.Insert(5, 0);
+			
+			Assert.AreEqual(5, list[0]);
+			Assert.AreEqual(1, list[1]);
+			Assert.AreEqual(2, list[2]);
+			Assert.AreEqual(3, list[3]);
+		}
 		
+		[Test]
+		public void TestInsertBehaviour()
+		{
+			using var list = new StackOnlyList<int>();
+			list.Insert(5, 0);
+			list.Insert(10, 0);
+			list.Insert(7, 1);
+			list.Insert(3, 2);
+			
+			Assert.AreEqual(10, list[0]);
+			Assert.AreEqual(7, list[1]);
+			Assert.AreEqual(3, list[2]);
+			Assert.AreEqual(5, list[3]);
+
+			Assert.AreEqual(4, list.Count);
+		}
+
+		[Test]
+		public void CanInsertAtCount()
+		{
+			using var list = new StackOnlyList<int>();
+			list.Insert(5, 0);
+			
+			Assert.AreEqual(5, list[0]);
+			Assert.AreEqual(1, list.Count);
+		}
+
 		[Test]
 		public void WorksWithNullBuffer()
 		{
@@ -77,6 +120,19 @@ namespace StackOnlyList
 			{
 				using var list = new StackOnlyList<int>(10);
 				list.RemoveAt(0);
+			});
+		}
+		
+		
+		[Test]
+		public void ThrowsOnInsertingAtInvalidPlace()
+		{
+			Assert.Throws<InvalidOperationException>(() =>
+			{
+				using var list = new StackOnlyList<int>();
+				list.Insert(5, 0);
+
+				list.Insert(10, 2);
 			});
 		}
 #endif
