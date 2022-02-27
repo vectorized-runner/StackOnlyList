@@ -85,7 +85,7 @@ namespace StackOnlyList
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
 			get
 			{
-				CheckIndexOutOfRangeAndThrow(index);
+				CheckIndexGreaterOrEqualToCountAndThrow(index);
 				return Span[index];
 			}
 		}
@@ -93,7 +93,7 @@ namespace StackOnlyList
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public ref T ElementAsRef(int index)
 		{
-			CheckIndexOutOfRangeAndThrow(index);
+			CheckIndexGreaterOrEqualToCountAndThrow(index);
 			return ref Span[index];
 		}
 
@@ -223,7 +223,7 @@ namespace StackOnlyList
 
 		public void RemoveAt(int index, out T element)
 		{
-			CheckIndexOutOfRangeAndThrow(index);
+			CheckIndexGreaterOrEqualToCountAndThrow(index);
 
 			element = Span[index];
 			
@@ -237,7 +237,7 @@ namespace StackOnlyList
 
 		public void RemoveAtSwapBack(int index)
 		{
-			CheckIndexOutOfRangeAndThrow(index);
+			CheckIndexGreaterOrEqualToCountAndThrow(index);
 			Span[index] = Span[--Count];
 		}
 
@@ -261,6 +261,8 @@ namespace StackOnlyList
 
 		[Conditional("Debug")]
 		void CheckIndexOutOfRangeAndThrow(int index)
+		[Conditional("Debug")]
+		void CheckIndexGreaterOrEqualToCountAndThrow(int index)
 		{
 			if(index >= Count || index < 0)
 				throw new IndexOutOfRangeException($"Index '{index}' is out of range. Count: '{Count}'.");
