@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Buffers;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -170,33 +171,47 @@ namespace StackOnlyList
 			// Check for resizing
 			if(Capacity == Count)
 			{
-				if(Capacity == 0)
-				{
-					// Use a fresh array, don't do any copying
-					Capacity = 4;
-					ArrayFromPool = ArrayPool<T>.Shared.Rent(Capacity);
-					Span = ArrayFromPool;
-				}
-				else
-				{
-					// First copy to new array, then return to the pool
-					var previousSpan = Span;
-					var newCapacity = Capacity * 2;
-					var newArray = ArrayPool<T>.Shared.Rent(newCapacity);
-					Span = newArray;
-					previousSpan.CopyTo(Span);
-
-					if(ArrayFromPool != null)
-					{
-						ArrayPool<T>.Shared.Return(ArrayFromPool);
-					}
-
-					ArrayFromPool = newArray;
-					Capacity = newCapacity;
-				}
+				EnsureCapacity(Capacity * 2);
 			}
 
 			Span[Count++] = item;
+		}
+
+		void EnsureCapacity(int newCapacity)
+		{
+			if(newCapacity < Capacity)
+				return;
+
+			if(Capacity == 0)
+			{
+				// Use a fresh array, don't do any copying
+				Capacity = 4;
+				ArrayFromPool = ArrayPool<T>.Shared.Rent(Capacity);
+				Span = ArrayFromPool;
+			}
+			else
+			{
+				// First copy to new array, then return to the pool
+				var previousSpan = Span;
+				var newArray = ArrayPool<T>.Shared.Rent(newCapacity);
+				Span = newArray;
+				previousSpan.CopyTo(Span);
+
+				if(ArrayFromPool != null)
+				{
+					ArrayPool<T>.Shared.Return(ArrayFromPool);
+				}
+
+				Capacity = newCapacity;
+			}
+		}
+
+		public void AddRange(IEnumerable<T> items)
+		{
+			foreach(var item in items)
+			{
+				Add(item);
+			}
 		}
 
 		public void RemoveAtSwapBack(int index)
