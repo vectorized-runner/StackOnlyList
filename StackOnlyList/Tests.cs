@@ -22,6 +22,18 @@ namespace StackOnlyList
 		// }
 
 		[Test]
+		public void PoolIsNotNullOnResize()
+		{
+			var list = new StackOnlyList<int>(0);
+			list.Add(1);
+			list.Add(2);
+			list.Add(3);
+			list.Add(4);
+			
+			Assert.NotNull(list.ArrayFromPool);
+		}
+
+		[Test]
 		public void EnsureCapacity()
 		{
 			using var list = new StackOnlyList<int>(0);

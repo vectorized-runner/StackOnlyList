@@ -10,8 +10,8 @@ namespace StackOnlyList
 	// Always pass this as ref to methods, never return it (unless you're ref returning, then its fine)
 	public ref struct StackOnlyList<T>
 	{
-		Span<T> Span;
-		T[] ArrayFromPool;
+		internal Span<T> Span;
+		internal T[] ArrayFromPool;
 		public int Capacity { get; private set; }
 		public int Count { get; private set; }
 
