@@ -227,7 +227,7 @@ namespace StackOnlyList
 			Assert.AreEqual(5, theList[1]);
 			Assert.AreEqual(7, theList[2]);
 
-			Assert.AreEqual(0, theList.Count);
+			Assert.AreEqual(3, theList.Count);
 			
 			void AddNum(ref StackOnlyList<int> list, int num)
 			{
