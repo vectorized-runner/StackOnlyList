@@ -10,7 +10,7 @@ namespace StackOnlyList
 	[MemoryDiagnoser]
 	[HardwareCounters(HardwareCounter.CacheMisses, HardwareCounter.BranchMispredictions, HardwareCounter.InstructionRetired)]
 	[SkipLocalsInit]
-	public class Benchmarks
+	public class Benchmarks_VersusList
 	{
 		int[] CopyArray;
 		int Min = 0;
@@ -18,7 +18,7 @@ namespace StackOnlyList
 		int ArrayCount = 16;
 		int IterationCount = 1_000_000;
 
-		public Benchmarks()
+		public Benchmarks_VersusList()
 		{
 			var random = new Random(0);
 
