@@ -22,6 +22,17 @@ namespace StackOnlyList
 		// }
 
 		[Test]
+		public void ElementAsRef()
+		{
+			using var list = new StackOnlyList<int>(3);
+			list.Add(2);
+			ref var item = ref list.ElementAsRef(0);
+			item++;
+			
+			Assert.AreEqual(3, list[0]);
+		}
+
+		[Test]
 		public void Reverse()
 		{
 			using var list = new StackOnlyList<int>(3);
