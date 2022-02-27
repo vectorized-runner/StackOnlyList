@@ -2,6 +2,7 @@
 using System.Buffers;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace StackOnlyList
 {
@@ -23,6 +24,26 @@ namespace StackOnlyList
 		public ReadOnlySpan<T> AsReadOnlySpan()
 		{
 			return AsSpan();
+		}
+
+		public override string ToString()
+		{
+			var stringBuilder = new StringBuilder();
+			stringBuilder.Append("Count: ");
+			stringBuilder.Append(Count);
+			stringBuilder.AppendLine();
+			stringBuilder.Append("Capacity: ");
+			stringBuilder.Append(Capacity);
+			stringBuilder.AppendLine();
+			stringBuilder.Append("Elements: ");
+
+			for(int i = 0; i < Count; i++)
+			{
+				stringBuilder.Append(Span[i]);
+				stringBuilder.Append(", ");
+			}
+
+			return stringBuilder.ToString();
 		}
 
 		public StackOnlyList(Span<T> initialBuffer)
