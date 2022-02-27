@@ -22,6 +22,24 @@ namespace StackOnlyList
 		// }
 
 		[Test]
+		public void ZeroCapacityWorks()
+		{
+			using var list = new StackOnlyList<int>();
+			
+			Assert.AreEqual(0, list.Count);
+			
+			list.Add(2);
+			list.Add(4);
+			list.Add(6);
+			list.Add(8);
+			
+			Assert.AreEqual(2, list[0]);
+			Assert.AreEqual(4, list[1]);
+			Assert.AreEqual(6, list[2]);
+			Assert.AreEqual(8, list[3]);
+		}
+
+		[Test]
 		public void IndexOf()
 		{
 			using var list = new StackOnlyList<int>();
@@ -337,9 +355,9 @@ namespace StackOnlyList
 		}
 		
 		[Test]
-		public void ZeroCapacityThrows()
+		public void ZeroCapacityDoesNotThrow()
 		{
-			Assert.Throws<InvalidOperationException>(() =>
+			Assert.DoesNotThrow(() =>
 			{
 				using var list = new StackOnlyList<int>(0);
 			});

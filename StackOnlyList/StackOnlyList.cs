@@ -31,15 +31,29 @@ namespace StackOnlyList
 			Count = 0;
 		}
 
-		public StackOnlyList(int initialCapacity)
+		public StackOnlyList(int initialCapacity = 0)
 		{
-			if(initialCapacity <= 0)
-				throw new InvalidOperationException($"Non-positive capacity '{initialCapacity}' is not allowed.");
-
-			ArrayFromPool = ArrayPool<T>.Shared.Rent(initialCapacity);
-			Span = ArrayFromPool;
-			Capacity = initialCapacity;
-			Count = 0;
+			switch(initialCapacity)
+			{
+				case < 0:
+					throw new InvalidOperationException($"Negative capacity '{initialCapacity}' is not allowed.");
+				case 0:
+				{
+					ArrayFromPool = null;
+					Span = null;
+					Capacity = 0;
+					Count = 0;
+					break;
+				}
+				case > 0:
+				{
+					ArrayFromPool = ArrayPool<T>.Shared.Rent(initialCapacity);
+					Span = ArrayFromPool;
+					Capacity = initialCapacity;
+					Count = 0;
+					break;
+				}
+			}
 		}
 
 		public T this[int index]
@@ -107,7 +121,7 @@ namespace StackOnlyList
 
 			return false;
 		}
-		
+
 		public void Add(in T item)
 		{
 			// Check for resizing
@@ -151,10 +165,10 @@ namespace StackOnlyList
 		public void Dispose()
 		{
 			var toReturn = ArrayFromPool;
-			
+
 			// Clear data, so using after disposed is safer
 			this = default;
-			
+
 			if(toReturn != null)
 			{
 				ArrayPool<T>.Shared.Return(toReturn);
