@@ -5,6 +5,42 @@ namespace StackOnlyList
 {
 	public class Tests
 	{
+		// This does throw StackOverFlow exception, but you can't catch it.
+		// [Test]
+		// public void StackAllocThrowsWhenCalledInlined()
+		// {
+		// 	Assert.Throws<StackOverflowException>(() =>
+		// 	{
+		// 		for(int i = 0; i < 100_000; i++)
+		// 		{
+		// 			using var list = new StackOnlyList<int>(stackalloc int[32]);
+		// 			list.Add(0);
+		// 			list.Add(0);
+		// 			list.Add(0);
+		// 		}
+		// 	});
+		// }
+		
+		[Test]
+		public void StackAllocDoesntThrowWhenCalledOnSeparateMethod()
+		{
+			Assert.DoesNotThrow(() =>
+			{
+				for(int i = 0; i < 100_000; i++)
+				{
+					InitStackAllocList();
+				}
+			});
+			
+			void InitStackAllocList()
+			{
+				using var list = new StackOnlyList<int>(stackalloc int[32]);
+				list.Add(0);
+				list.Add(0);
+				list.Add(0);
+			}
+		}
+		
 		[Test]
 		public void WorksWithStackAlloc()
 		{
