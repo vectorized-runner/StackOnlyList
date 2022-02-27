@@ -107,6 +107,7 @@ namespace StackOnlyList
 			}
 		}
 
+		[Conditional("Debug")]
 		void CheckIndexOutOfRangeAndThrow(int index)
 		{
 			if(index >= Count)
