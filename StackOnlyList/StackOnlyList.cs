@@ -171,21 +171,22 @@ namespace StackOnlyList
 			// Check for resizing
 			if(Capacity == Count)
 			{
-				EnsureCapacity(Capacity * 2);
+				var newCapacity = Capacity == 0 ? 4 : 2 * Capacity;
+				EnsureCapacity(newCapacity);
 			}
 
 			Span[Count++] = item;
 		}
 
-		void EnsureCapacity(int newCapacity)
+		public void EnsureCapacity(int newCapacity)
 		{
-			if(newCapacity < Capacity)
+			if(newCapacity <= Capacity)
 				return;
 
 			if(Capacity == 0)
 			{
 				// Use a fresh array, don't do any copying
-				Capacity = 4;
+				Capacity = newCapacity;
 				ArrayFromPool = ArrayPool<T>.Shared.Rent(Capacity);
 				Span = ArrayFromPool;
 			}
