@@ -20,7 +20,28 @@ namespace StackOnlyList
 		// 		}
 		// 	});
 		// }
+		[Test]
+		public void WorksWithZeroBuffer()
+		{
+			using var list = new StackOnlyList<int>(stackalloc int[0]);
+			list.Add(1);
+			list.Add(2);
+			list.Add(3);
 
+			Assert.AreEqual(1, list[0]);
+			Assert.AreEqual(2, list[1]);
+			Assert.AreEqual(3, list[2]);
+		}
+
+		[Test]
+		public void DoesNotThrowOnZeroBuffer()
+		{
+			Assert.DoesNotThrow(() =>
+			{
+				using var list = new StackOnlyList<int>(stackalloc int[0]);
+			});
+		}
+		
 		[Test]
 		public void PoolIsNotNullOnResize()
 		{
