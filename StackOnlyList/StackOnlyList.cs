@@ -72,6 +72,25 @@ namespace StackOnlyList
 			return ref Span[index];
 		}
 
+		public void Reverse()
+		{
+			// Don't dispose this! We'll use its memory
+			var reverseList = new StackOnlyList<T>(Count);
+
+			for(int i = 0; i < Count; i++)
+			{
+				reverseList.Span[Count - i - 1] = Span[i];
+			}
+
+			// Return our memory, since we'll use the memory from tempList
+			if(ArrayFromPool != null)
+			{
+				ArrayPool<T>.Shared.Return(ArrayFromPool);
+			}
+
+			this = reverseList;
+		}
+
 		public void Clear()
 		{
 			Count = 0;

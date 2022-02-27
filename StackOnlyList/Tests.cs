@@ -22,6 +22,28 @@ namespace StackOnlyList
 		// }
 
 		[Test]
+		public void Reverse()
+		{
+			using var list = new StackOnlyList<int>(3);
+			list.Add(1);
+			list.Add(2);
+			list.Add(3);
+			list.Reverse();
+			Assert.AreEqual(3, list[0]);
+			Assert.AreEqual(2, list[1]);
+			Assert.AreEqual(1, list[2]);
+
+			using var list2 = new StackOnlyList<int>(3);
+			list.Add(2);
+			list.Add(4);
+			list.Add(6);
+			list.Reverse();
+			Assert.AreEqual(6, list[0]);
+			Assert.AreEqual(4, list[1]);
+			Assert.AreEqual(2, list[2]);
+		}
+		
+		[Test]
 		public void ZeroCapacityWorks()
 		{
 			using var list = new StackOnlyList<int>();
