@@ -68,6 +68,8 @@ namespace StackOnlyList
 			Assert.NotNull(list.ArrayFromPool);
 		}
 
+		// This does throw, but only in debug mode
+#if Debug
 		[Test]
 		public void RemoveAtThrowsOnInvalidIndex()
 		{
@@ -77,7 +79,8 @@ namespace StackOnlyList
 				list.RemoveAt(0);
 			});
 		}
-
+#endif
+		
 		[Test]
 		public void RemoveAtFirst()
 		{

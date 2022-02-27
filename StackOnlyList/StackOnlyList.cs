@@ -218,12 +218,21 @@ namespace StackOnlyList
 
 		public void RemoveAt(int index)
 		{
-			throw new NotImplementedException();
+			RemoveAt(index, out _);
 		}
 
 		public void RemoveAt(int index, out T element)
 		{
-			throw new NotImplementedException();
+			CheckIndexOutOfRangeAndThrow(index);
+
+			element = Span[index];
+			
+			for(int i = index; i < Count - 1; i++)
+			{
+				Span[i] = Span[i + 1];
+			}
+
+			Count--;
 		}
 
 		public void RemoveAtSwapBack(int index)
