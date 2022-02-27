@@ -148,6 +148,11 @@ namespace StackOnlyList
 			}
 		}
 
+		public Span<T>.Enumerator GetEnumerator()
+		{
+			return AsSpan().GetEnumerator();
+		}
+
 		[Conditional("Debug")]
 		void CheckIndexOutOfRangeAndThrow(int index)
 		{

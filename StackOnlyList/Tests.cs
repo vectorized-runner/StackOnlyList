@@ -58,6 +58,23 @@ namespace StackOnlyList
 			Assert.AreEqual(8, list[3]);
 			Assert.AreEqual(4, list.Count);
 		}
+
+		[Test]
+		public void ForEachWorks()
+		{
+			using var list = new StackOnlyList<int>(10);
+			list.Add(3);
+			list.Add(5);
+			list.Add(7);
+
+			var sum = 0;
+			foreach(ref readonly var item in list)
+			{
+				sum += item;
+			}
+			
+			Assert.AreEqual(3 + 5 + 7, sum);
+		}
 		
 		[Test]
 		public void RemoveFromLast()
