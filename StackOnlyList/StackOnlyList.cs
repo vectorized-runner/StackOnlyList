@@ -114,6 +114,8 @@ namespace StackOnlyList
 
 		public void Clear()
 		{
+			// TODO: Clear should clear the memory too.
+			// TODO: Maybe add simpler clear version
 			Count = 0;
 		}
 
@@ -177,6 +179,7 @@ namespace StackOnlyList
 			}
 		}
 
+		// TODO: Make this private.
 		public void EnsureCapacity(int newCapacity)
 		{
 			if(newCapacity <= Capacity)
@@ -205,14 +208,6 @@ namespace StackOnlyList
 
 				ArrayFromPool = newArray;
 				Capacity = newCapacity;
-			}
-		}
-
-		public void AddRange(IEnumerable<T> items)
-		{
-			foreach(var item in items)
-			{
-				Add(item);
 			}
 		}
 

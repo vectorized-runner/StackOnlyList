@@ -209,16 +209,16 @@ namespace StackOnlyList
 			Assert.AreEqual(3, list.Capacity);
 		}
 		
-		[Test]
-		public void AddRange()
-		{
-			using var list = new StackOnlyList<int>();
-			list.AddRange(new [] { 1, 2, 3 });
-			
-			Assert.AreEqual(1, list[0]);
-			Assert.AreEqual(2, list[1]);
-			Assert.AreEqual(3, list[2]);
-		}
+		// [Test]
+		// public void AddRange()
+		// {
+		// 	using var list = new StackOnlyList<int>();
+		// 	list.AddRange(new [] { 1, 2, 3 });
+		// 	
+		// 	Assert.AreEqual(1, list[0]);
+		// 	Assert.AreEqual(2, list[1]);
+		// 	Assert.AreEqual(3, list[2]);
+		// }
 
 		[Test]
 		public void ElementAsRef()
