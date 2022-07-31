@@ -35,6 +35,12 @@ namespace StackOnlyList
 		{
 			return AsSpan();
 		}
+		
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public Span<T>.Enumerator GetEnumerator()
+		{
+			return AsSpan().GetEnumerator();
+		}
 
 		public override string ToString()
 		{
@@ -268,12 +274,7 @@ namespace StackOnlyList
 				ArrayPool<T>.Shared.Return(toReturn);
 			}
 		}
-
-		public Span<T>.Enumerator GetEnumerator()
-		{
-			return AsSpan().GetEnumerator();
-		}
-
+		
 		void CheckIndexGreaterThanCountAndThrow(int index)
 		{
 			if(index > Count)
