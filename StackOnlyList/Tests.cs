@@ -564,7 +564,7 @@ namespace StackOnlyList
 			Assert.AreEqual(10, list[4]);
 
 			Assert.AreEqual(5, list.Count);
-			Assert.AreEqual(8, list.Capacity);
+			Assert.LessOrEqual(8, list.Capacity);
 		}
 
 		[Test]
@@ -596,7 +596,7 @@ namespace StackOnlyList
 		[TestCase(int.MinValue)]
 		public void NegativeCapacityThrows(int negativeCapacity)
 		{
-			Assert.Throws<InvalidOperationException>(() =>
+			Assert.Throws<ArgumentOutOfRangeException>(() =>
 			{
 				using var list = new StackOnlyList<int>(negativeCapacity);
 			});

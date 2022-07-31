@@ -99,7 +99,6 @@ namespace StackOnlyList
 
 		public void Reverse()
 		{
-			// Don't dispose this! We'll use its memory
 			var reverseList = new StackOnlyList<T>(Count);
 
 			for(int i = 0; i < Count; i++)
@@ -113,12 +112,10 @@ namespace StackOnlyList
 				ArrayPool<T>.Shared.Return(ArrayFromPool);
 			}
 
-			this = reverseList;
-		}
-
-		public void ClearWithoutMemoryRelease()
-		{
-			Count = 0;
+			Capacity = reverseList.Capacity;
+			ArrayFromPool = reverseList.ArrayFromPool;
+			Span = reverseList.ArrayFromPool;
+			// We keep the count, as it's not assigned in the ReverseList
 		}
 
 		public void Clear()
