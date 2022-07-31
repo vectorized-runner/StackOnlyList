@@ -62,7 +62,7 @@ namespace StackOnlyList
 			{
 				case < 0:
 				{
-					throw new InvalidOperationException($"Negative capacity '{initialCapacity}' is not allowed.");
+					throw new ArgumentOutOfRangeException($"Negative capacity '{initialCapacity}' is not allowed.");
 				}
 				case 0:
 				{
@@ -276,7 +276,7 @@ namespace StackOnlyList
 		{
 			var toReturn = ArrayFromPool;
 
-			// Clear data, so using after disposed is safer
+			// Prevent using existing data, if this struct is erroneously used after it is disposed.
 			this = default;
 
 			if(toReturn != null)
@@ -290,17 +290,15 @@ namespace StackOnlyList
 			return AsSpan().GetEnumerator();
 		}
 
-		[Conditional("Debug")]
 		void CheckIndexGreaterThanCountAndThrow(int index)
 		{
-			if(index > Count || index < 0)
+			if(index > Count)
 				throw new IndexOutOfRangeException($"Index '{index}' is out of range. Count: '{Count}'.");
 		}
 
-		[Conditional("Debug")]
 		void CheckIndexGreaterOrEqualToCountAndThrow(int index)
 		{
-			if(index >= Count || index < 0)
+			if(index >= Count)
 				throw new IndexOutOfRangeException($"Index '{index}' is out of range. Count: '{Count}'.");
 		}
 	}
