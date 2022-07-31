@@ -181,7 +181,7 @@ namespace StackOnlyList
 		}
 
 		// TODO: Make this private.
-		public void EnsureCapacity(int newCapacity)
+		void EnsureCapacity(int newCapacity)
 		{
 			if(newCapacity <= Capacity)
 				return;

@@ -200,15 +200,6 @@ namespace StackOnlyList
 			Assert.AreEqual(3, list.Count);
 		}
 
-		[Test]
-		public void EnsureCapacity()
-		{
-			using var list = new StackOnlyList<int>(0);
-			list.EnsureCapacity(3);
-			
-			Assert.AreEqual(3, list.Capacity);
-		}
-		
 		// [Test]
 		// public void AddRange()
 		// {
