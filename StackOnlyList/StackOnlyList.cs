@@ -110,13 +110,16 @@ namespace StackOnlyList
 			this = reverseList;
 		}
 
-		public void Clear()
+		public void ClearWithoutMemoryRelease()
 		{
-			// TODO: Clear should clear the memory too.
-			// TODO: Maybe add simpler clear version
 			Count = 0;
 		}
 
+		public void Clear()
+		{
+			Dispose();
+		}
+		
 		public int IndexOf(in T item)
 		{
 			for(int i = 0; i < Count; i++)
