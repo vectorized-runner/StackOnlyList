@@ -167,38 +167,29 @@ namespace StackOnlyList
 
 		public void Add(in T item)
 		{
-			EnsureCapacityBeforeAddSingleItem();
+			if(Capacity == Count)
+			{
+				var desiredCapacity = Capacity == 0 ? 4 : 2 * Capacity;
+				Grow(desiredCapacity);
+			}
+			
 			Span[Count++] = item;
 		}
 
-		void EnsureCapacityBeforeAddSingleItem()
+		void Grow(int desiredCapacity)
 		{
-			if(Capacity == Count)
-			{
-				var newCapacity = Capacity == 0 ? 4 : 2 * Capacity;
-				EnsureCapacity(newCapacity);
-			}
-		}
-
-		// TODO: Make this private.
-		void EnsureCapacity(int newCapacity)
-		{
-			if(newCapacity <= Capacity)
-				return;
-
 			if(Capacity == 0)
 			{
-				// Use a fresh array, don't do any copying
-				Capacity = newCapacity;
-				var newArray = ArrayPool<T>.Shared.Rent(newCapacity);
+				var newArray = ArrayPool<T>.Shared.Rent(desiredCapacity);
 				ArrayFromPool = newArray;
 				Span = newArray;
+				Capacity = newArray.Length;
 			}
 			else
 			{
 				// First copy to new array, then return to the pool
 				var previousSpan = Span;
-				var newArray = ArrayPool<T>.Shared.Rent(newCapacity);
+				var newArray = ArrayPool<T>.Shared.Rent(desiredCapacity);
 				Span = newArray;
 				previousSpan.CopyTo(Span);
 
@@ -208,7 +199,7 @@ namespace StackOnlyList
 				}
 
 				ArrayFromPool = newArray;
-				Capacity = newCapacity;
+				Capacity = newArray.Length;
 			}
 		}
 
@@ -250,8 +241,12 @@ namespace StackOnlyList
 		public void Insert(in T item, int index)
 		{
 			CheckIndexGreaterThanCountAndThrow(index);
-			EnsureCapacityBeforeAddSingleItem();
-
+			
+			if(Capacity == Count)
+			{
+				var newCapacity = Capacity == 0 ? 4 : 2 * Capacity;
+				Grow(newCapacity);
+			}
 			for(int i = Count; i > index; i--)
 			{
 				Span[i] = Span[i - 1];
