@@ -22,7 +22,7 @@ namespace StackOnlyList
 			             .AddExporter(RPlotExporter.Default, CsvExporter.Default)
 			             .AddColumnProvider(DefaultColumnProviders.Instance);
 
-			var summary = BenchmarkRunner.Run<Benchmarks_Allocation>(config);
+			var summary = BenchmarkRunner.Run<Benchmarks_VersusList>(config);
 		}
 	}
 }

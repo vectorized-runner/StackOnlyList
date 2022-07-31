@@ -28,6 +28,19 @@ namespace StackOnlyList
 				CopyArray[i] = random.Next(Min, Max);
 			}
 		}
+		
+		[Benchmark]
+		public int StackOnlyListSum()
+		{
+			var sum = 0;
+
+			for(int i = 0; i < IterationCount; i++)
+			{
+				sum += StackOnlyListSumOnce();
+			}
+
+			return sum;
+		}
 
 		[Benchmark(Baseline = true)]
 		public int NewListSum()
@@ -43,7 +56,7 @@ namespace StackOnlyList
 		}
 
 		[Benchmark]
-		public int NewListSum_InitialCapacity()
+		public int NewListSumWithInitialCapacity()
 		{
 			var sum = 0;
 
@@ -55,22 +68,9 @@ namespace StackOnlyList
 			return sum;
 		}
 
-		[Benchmark]
-		public int StackOnlyListSum()
-		{
-			var sum = 0;
-
-			for(int i = 0; i < IterationCount; i++)
-			{
-				sum += StackOnlyListSumOnce();
-			}
-
-			return sum;
-		}
-
 		int StackOnlyListSumOnce()
-		{
-			using var list = new StackOnlyList<int>(stackalloc int[32]);
+		{ 
+			using var list = new StackOnlyList<int>(stackalloc int[ArrayCount]);
 
 			for(int i = 0; i < ArrayCount; i++)
 			{
