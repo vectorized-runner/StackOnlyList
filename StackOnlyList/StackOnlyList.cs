@@ -278,6 +278,7 @@ namespace StackOnlyList
 				throw new IndexOutOfRangeException($"Index '{index}' is out of range. Count: '{Count}'.");
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		void CheckIndexGreaterOrEqualToCountAndThrow(int index)
 		{
 			if(index >= Count)
