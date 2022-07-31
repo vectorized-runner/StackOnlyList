@@ -76,7 +76,7 @@ namespace StackOnlyList
 				{
 					ArrayFromPool = ArrayPool<T>.Shared.Rent(initialCapacity);
 					Span = ArrayFromPool;
-					Capacity = initialCapacity;
+					Capacity = ArrayFromPool.Length;
 					Count = 0;
 					break;
 				}
