@@ -8,8 +8,9 @@ using System.Text;
 namespace StackOnlyList
 {
 	// Always pass this as ref to methods, never return it (unless you're ref returning, then its fine)
-	public ref struct StackOnlyList<T>
+	public ref struct StackOnlyList<T> where T : IEquatable<T>
 	{
+		// These fields are internal because they're used in unit tests
 		internal Span<T> Span;
 		internal T[] ArrayFromPool;
 		public int Capacity { get; private set; }
@@ -60,7 +61,9 @@ namespace StackOnlyList
 			switch(initialCapacity)
 			{
 				case < 0:
+				{
 					throw new InvalidOperationException($"Negative capacity '{initialCapacity}' is not allowed.");
+				}
 				case 0:
 				{
 					ArrayFromPool = null;
