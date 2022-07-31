@@ -264,7 +264,8 @@ namespace StackOnlyList
 			var toReturn = ArrayFromPool;
 
 			// Prevent using existing data, if this struct is erroneously used after it is disposed.
-			this = default;
+			// This can be commented out for extra performance.
+			// this = default;
 
 			if(toReturn != null)
 			{
@@ -272,6 +273,7 @@ namespace StackOnlyList
 			}
 		}
 		
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		void CheckIndexGreaterThanCountAndThrow(int index)
 		{
 			if(index > Count)
