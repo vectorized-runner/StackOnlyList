@@ -225,7 +225,7 @@ namespace StackOnlyList
 		{
 			using var list = new StackOnlyList<int>(3);
 			list.Add(2);
-			ref var item = ref list.ElementAsRef(0);
+			ref var item = ref list[0];
 			item++;
 			
 			Assert.AreEqual(3, list[0]);

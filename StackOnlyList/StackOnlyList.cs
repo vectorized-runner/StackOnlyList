@@ -83,21 +83,14 @@ namespace StackOnlyList
 			}
 		}
 
-		public T this[int index]
+		public ref T this[int index]
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
 			get
 			{
 				CheckIndexGreaterOrEqualToCountAndThrow(index);
-				return Span[index];
+				return ref Span[index];
 			}
-		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public ref T ElementAsRef(int index)
-		{
-			CheckIndexGreaterOrEqualToCountAndThrow(index);
-			return ref Span[index];
 		}
 
 		public void Reverse()
