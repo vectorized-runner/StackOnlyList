@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Buffers;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -15,6 +13,16 @@ namespace StackOnlyList
 		internal T[] ArrayFromPool;
 		public int Capacity { get; private set; }
 		public int Count { get; private set; }
+
+		public ref T this[int index]
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			get
+			{
+				CheckIndexGreaterOrEqualToCountAndThrow(index);
+				return ref Span[index];
+			}
+		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public Span<T> AsSpan()
@@ -80,16 +88,6 @@ namespace StackOnlyList
 					Count = 0;
 					break;
 				}
-			}
-		}
-
-		public ref T this[int index]
-		{
-			[MethodImpl(MethodImplOptions.AggressiveInlining)]
-			get
-			{
-				CheckIndexGreaterOrEqualToCountAndThrow(index);
-				return ref Span[index];
 			}
 		}
 
@@ -221,7 +219,7 @@ namespace StackOnlyList
 			CheckIndexGreaterOrEqualToCountAndThrow(index);
 
 			element = Span[index];
-			
+
 			for(int i = index; i < Count - 1; i++)
 			{
 				Span[i] = Span[i + 1];
