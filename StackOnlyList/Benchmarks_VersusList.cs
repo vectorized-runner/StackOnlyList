@@ -28,8 +28,8 @@ namespace StackOnlyList
 				CopyArray[i] = random.Next(Min, Max);
 			}
 		}
-		
-		[Benchmark]
+
+		[Benchmark(Baseline = true)]
 		public int StackOnlyListSum()
 		{
 			var sum = 0;
@@ -42,34 +42,8 @@ namespace StackOnlyList
 			return sum;
 		}
 
-		[Benchmark(Baseline = true)]
-		public int NewListSum()
-		{
-			var sum = 0;
-
-			for(int i = 0; i < IterationCount; i++)
-			{
-				sum += SumListOnce();
-			}
-
-			return sum;
-		}
-
-		[Benchmark]
-		public int NewListSumWithInitialCapacity()
-		{
-			var sum = 0;
-
-			for(int i = 0; i < IterationCount; i++)
-			{
-				sum += SumListOnceInitialCapacity();
-			}
-
-			return sum;
-		}
-
 		int StackOnlyListSumOnce()
-		{ 
+		{
 			using var list = new StackOnlyList<int>(stackalloc int[ArrayCount]);
 
 			for(int i = 0; i < ArrayCount; i++)
@@ -87,28 +61,22 @@ namespace StackOnlyList
 			return sum;
 		}
 
-		int SumListOnceInitialCapacity()
+		[Benchmark]
+		public int DefaultListSum()
 		{
-			var list = new List<int>(ArrayCount);
-
-			for(int i = 0; i < ArrayCount; i++)
-			{
-				list.Add(CopyArray[i]);
-			}
-
 			var sum = 0;
 
-			for(int i = 0; i < list.Count; i++)
+			for(int i = 0; i < IterationCount; i++)
 			{
-				sum += list[i];
+				sum += DefaultListSumOnce();
 			}
 
 			return sum;
 		}
 
-		int SumListOnce()
+		int DefaultListSumOnce()
 		{
-			var list = new List<int>();
+			var list = new List<int>(ArrayCount);
 
 			for(int i = 0; i < ArrayCount; i++)
 			{
