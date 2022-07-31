@@ -212,6 +212,31 @@ namespace StackOnlyList
 		// }
 
 		[Test]
+		public void UsingRefReturnAfterAdd()
+		{
+			using var list = new StackOnlyList<int>(stackalloc int[2]);
+			
+			list.Add(0);
+			ref var firstElement = ref list[0];
+			list[0] = 1;
+			
+			Assert.AreEqual(1, firstElement);
+
+			list.Add(0);
+			list.Add(0);
+			list.Add(0);
+			list.Add(0);
+			list.Add(0);
+			list.Add(0);
+			list.Add(0);
+			list.Add(0);
+			list.Add(0);
+
+			list[0] = 2;
+			Assert.AreNotEqual(2, firstElement);
+		}
+
+		[Test]
 		public void ElementAsRef()
 		{
 			using var list = new StackOnlyList<int>(3);
