@@ -11,8 +11,13 @@ namespace StackOnlyList
 		// These fields are internal because they're used in unit tests
 		internal Span<T> Span;
 		internal T[] ArrayFromPool;
-		public int Capacity { get; private set; }
 		public int Count { get; private set; }
+		
+		public int Capacity
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			get => Span.Length;
+		}
 
 		public ref T this[int index]
 		{
@@ -66,7 +71,6 @@ namespace StackOnlyList
 		{
 			ArrayFromPool = null;
 			Span = initialBuffer;
-			Capacity = initialBuffer.Length;
 			Count = 0;
 		}
 
@@ -81,8 +85,7 @@ namespace StackOnlyList
 				case 0:
 				{
 					ArrayFromPool = null;
-					Span = null;
-					Capacity = 0;
+					Span = Span<T>.Empty;
 					Count = 0;
 					break;
 				}
@@ -90,7 +93,6 @@ namespace StackOnlyList
 				{
 					ArrayFromPool = ArrayPool<T>.Shared.Rent(initialCapacity);
 					Span = ArrayFromPool;
-					Capacity = ArrayFromPool.Length;
 					Count = 0;
 					break;
 				}
@@ -166,7 +168,6 @@ namespace StackOnlyList
 				var newArray = ArrayPool<T>.Shared.Rent(desiredCapacity);
 				ArrayFromPool = newArray;
 				Span = newArray;
-				Capacity = newArray.Length;
 			}
 			else
 			{
@@ -182,7 +183,6 @@ namespace StackOnlyList
 				}
 
 				ArrayFromPool = newArray;
-				Capacity = newArray.Length;
 			}
 		}
 
