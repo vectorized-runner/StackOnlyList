@@ -12,7 +12,7 @@ namespace StackOnlyList
 		internal Span<T> Span;
 		internal T[] ArrayFromPool;
 		public int Count { get; private set; }
-		
+
 		public int Capacity
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -40,7 +40,7 @@ namespace StackOnlyList
 		{
 			return AsSpan();
 		}
-		
+
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public Span<T>.Enumerator GetEnumerator()
 		{
@@ -143,7 +143,7 @@ namespace StackOnlyList
 			{
 				Grow();
 			}
-			
+
 			Span[Count++] = item;
 		}
 
@@ -214,11 +214,12 @@ namespace StackOnlyList
 		public void Insert(in T item, int index)
 		{
 			CheckIndexGreaterThanCountAndThrow(index);
-			
+
 			if(Capacity == Count)
 			{
 				Grow();
 			}
+
 			for(int i = Count; i > index; i--)
 			{
 				Span[i] = Span[i - 1];
@@ -232,18 +233,18 @@ namespace StackOnlyList
 		public void Dispose()
 		{
 			var toReturn = ArrayFromPool;
-			
+
 			// Prevent using existing data, if this struct is erroneously used after it is disposed.
 			// This can be commented out for extra performance.
 			// this = default;
-			
+
 			if(toReturn != null)
 			{
 				ArrayFromPool = null;
 				ArrayPool<T>.Shared.Return(toReturn);
 			}
 		}
-		
+
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		void CheckIndexGreaterThanCountAndThrow(int index)
 		{
