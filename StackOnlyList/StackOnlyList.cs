@@ -136,8 +136,8 @@ namespace StackOnlyList
 			return AsSpan().Contains(item);
 		}
 
-		public void Add(in T item)
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public void Add(in T item)
 		{
 			if(Capacity == Count)
 			{
