@@ -470,22 +470,22 @@ namespace StackOnlyList
 			Assert.AreEqual(15, list[2]);
 		}
 
-		[Test]
-		public void CanAddAfterDispose()
-		{
-			var list = new StackOnlyList<int>(stackalloc int[10]);
-
-			list.Add(2);
-			list.Add(4);
-			list.Add(6);
-			
-			list.Dispose();
-
-			list.Add(10);
-			
-			Assert.AreEqual(10, list[0]);
-			Assert.AreEqual(1, list.Count);
-		}
+		// [Test]
+		// public void CanAddAfterDispose()
+		// {
+		// 	var list = new StackOnlyList<int>(stackalloc int[10]);
+		//
+		// 	list.Add(2);
+		// 	list.Add(4);
+		// 	list.Add(6);
+		// 	
+		// 	list.Dispose();
+		//
+		// 	list.Add(10);
+		// 	
+		// 	Assert.AreEqual(10, list[0]);
+		// 	Assert.AreEqual(1, list.Count);
+		// }
 
 		[Test]
 		public void CountDoesNotIncreaseWithoutPassingRef()
