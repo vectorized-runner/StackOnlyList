@@ -118,11 +118,6 @@ namespace StackOnlyList
 			// We keep the count, as it's not assigned in the ReverseList
 		}
 
-		public void Clear()
-		{
-			Dispose();
-		}
-		
 		public int IndexOf(in T item)
 		{
 			for(int i = 0; i < Count; i++)

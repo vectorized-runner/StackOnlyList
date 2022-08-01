@@ -427,19 +427,6 @@ namespace StackOnlyList
 		}
 
 		[Test]
-		public void CountIsZeroAfterClear()
-		{
-			using var list = new StackOnlyList<int>(10);
-			list.Add(0);
-			list.Add(5);
-			list.Add(10);
-
-			list.Clear();
-			
-			Assert.AreEqual(0, list.Count);
-		}
-		
-		[Test]
 		public void StackAllocDoesntThrowWhenCalledOnSeparateMethod()
 		{
 			Assert.DoesNotThrow(() =>
