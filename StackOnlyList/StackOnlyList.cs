@@ -140,15 +140,16 @@ namespace StackOnlyList
 		{
 			if(Capacity == Count)
 			{
-				var desiredCapacity = Capacity == 0 ? 4 : 2 * Capacity;
-				Grow(desiredCapacity);
+				Grow();
 			}
 			
 			Span[Count++] = item;
 		}
 
-		void Grow(int desiredCapacity)
+		void Grow()
 		{
+			var desiredCapacity = Capacity == 0 ? 4 : 2 * Capacity;
+
 			if(Capacity == 0)
 			{
 				var newArray = ArrayPool<T>.Shared.Rent(desiredCapacity);
@@ -213,8 +214,7 @@ namespace StackOnlyList
 			
 			if(Capacity == Count)
 			{
-				var newCapacity = Capacity == 0 ? 4 : 2 * Capacity;
-				Grow(newCapacity);
+				Grow();
 			}
 			for(int i = Count; i > index; i--)
 			{
