@@ -137,6 +137,7 @@ namespace StackOnlyList
 		}
 
 		public void Add(in T item)
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		{
 			if(Capacity == Count)
 			{
@@ -146,6 +147,8 @@ namespace StackOnlyList
 			Span[Count++] = item;
 		}
 
+		// We don't want to inline the rare path
+		[MethodImpl(MethodImplOptions.NoInlining)]
 		void Grow()
 		{
 			var desiredCapacity = Capacity == 0 ? 4 : 2 * Capacity;
