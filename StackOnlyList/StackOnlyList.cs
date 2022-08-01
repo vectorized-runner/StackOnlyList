@@ -97,25 +97,10 @@ namespace StackOnlyList
 			}
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public void Reverse()
 		{
-			var reverseList = new StackOnlyList<T>(Count);
-
-			for(int i = 0; i < Count; i++)
-			{
-				reverseList.Span[Count - i - 1] = Span[i];
-			}
-
-			// Return our memory, since we'll use the memory from tempList
-			if(ArrayFromPool != null)
-			{
-				ArrayPool<T>.Shared.Return(ArrayFromPool);
-			}
-
-			Capacity = reverseList.Capacity;
-			ArrayFromPool = reverseList.ArrayFromPool;
-			Span = reverseList.ArrayFromPool;
-			// We keep the count, as it's not assigned in the ReverseList
+			AsSpan().Reverse();
 		}
 
 		public int IndexOf(in T item)
