@@ -5,7 +5,6 @@ using System.Text;
 
 namespace StackOnlyList
 {
-	// Always pass this as ref to methods, never return it (unless you're ref returning, then its fine)
 	public ref struct StackOnlyList<T> where T : IEquatable<T>
 	{
 		// These fields are internal because they're used in unit tests
@@ -45,26 +44,6 @@ namespace StackOnlyList
 		public Span<T>.Enumerator GetEnumerator()
 		{
 			return AsSpan().GetEnumerator();
-		}
-
-		public override string ToString()
-		{
-			var stringBuilder = new StringBuilder();
-			stringBuilder.Append("Count: ");
-			stringBuilder.Append(Count);
-			stringBuilder.AppendLine();
-			stringBuilder.Append("Capacity: ");
-			stringBuilder.Append(Capacity);
-			stringBuilder.AppendLine();
-			stringBuilder.Append("Elements: ");
-
-			for(int i = 0; i < Count; i++)
-			{
-				stringBuilder.Append(Span[i]);
-				stringBuilder.Append(", ");
-			}
-
-			return stringBuilder.ToString();
 		}
 
 		public StackOnlyList(Span<T> initialBuffer)
@@ -199,16 +178,6 @@ namespace StackOnlyList
 		{
 			CheckIndexGreaterOrEqualToCountAndThrow(index);
 			Span[index] = Span[--Count];
-		}
-
-		public void RemoveFirst()
-		{
-			RemoveAt(0);
-		}
-
-		public void RemoveLast()
-		{
-			RemoveAt(Count - 1);
 		}
 
 		public void Insert(in T item, int index)
