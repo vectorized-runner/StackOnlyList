@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Buffers;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace StackOnlyList
 {
@@ -46,6 +45,7 @@ namespace StackOnlyList
 			return AsSpan().GetEnumerator();
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public StackOnlyList(Span<T> initialBuffer)
 		{
 			ArrayFromPool = null;
@@ -53,6 +53,7 @@ namespace StackOnlyList
 			Count = 0;
 		}
 
+		// Is it good to inline this or not?
 		public StackOnlyList(int initialCapacity = 0)
 		{
 			switch(initialCapacity)
@@ -155,11 +156,13 @@ namespace StackOnlyList
 			}
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public void RemoveAt(int index)
 		{
 			RemoveAt(index, out _);
 		}
 
+		// Is it good to inline this or not?
 		public void RemoveAt(int index, out T element)
 		{
 			CheckIndexGreaterOrEqualToCountAndThrow(index);
@@ -174,12 +177,14 @@ namespace StackOnlyList
 			Count--;
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public void RemoveAtSwapBack(int index)
 		{
 			CheckIndexGreaterOrEqualToCountAndThrow(index);
 			Span[index] = Span[--Count];
 		}
 
+		// Is it good to inline this or not?
 		public void Insert(in T item, int index)
 		{
 			CheckIndexGreaterThanCountAndThrow(index);
